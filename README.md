@@ -21,4 +21,5 @@ Simple CRM built with MERN — authentication, CRUD for customers.
 
 ## Notes
 - MongoDB: provide local or Atlas connection in .env
-- Video file: Demo video/demo.mp4 
+- Google Drive Video Link: https://drive.google.com/file/d/18dq-8OhROUEZoXBaMZAXFmUg_zpvRgzm/view?usp=sharing 
+

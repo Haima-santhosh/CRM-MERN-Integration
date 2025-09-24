@@ -6,23 +6,43 @@ import authRoutes from "./routes/authRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 
 dotenv.config();
+
+// Connect to MongoDB
 connectDB();
 
 const app = express();
 
+// Simple CORS setup
+
+
+
+
+// Allow local dev and frontend deployed URL
+
+
+const allowedOrigins = [
+  "http://localhost:5173",
+
+  // set this in Render env to your Vercel URL
+
+  process.env.FRONTEND_URL 
+
+
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://crm-mern-integration-ipqk.vercel.app"
-  ],
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
+  credentials: true
+}))
 
-app.use(express.json());
+// Body parser
+app.use(express.json())
 
-app.use("/api/auth", authRoutes);
-app.use("/api/customers", customerRoutes);
+// Routes
+app.use("/api/auth", authRoutes)
+app.use("/api/customers", customerRoutes)
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running at: http://localhost:${PORT}`));
+// Start server
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))

@@ -1,44 +1,25 @@
+import axios from "axios";
 
-import axios from "axios"
+// Backend URL: 
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+// Auth
+
+export const registerUser = (userData) => axios.post(`${API_URL}/auth/register`, userData)
+export const loginUser = (userData) => axios.post(`${API_URL}/auth/login`, userData)
+
+// Customers
 
 
-// backend url
-const API_URL = "https://crm-mern-integration-4.onrender.com/api"
+export const getCustomers = (token) =>
+  axios.get(`${API_URL}/customers`, { headers: { Authorization: `Bearer ${token}` } })
 
-// Register user
-export const registerUser = (userData) => {
-  return axios.post(`${API_URL}/auth/register`, userData);
-}
+export const addCustomer = (customerData, token) =>
+  axios.post(`${API_URL}/customers`, customerData, { headers: { Authorization: `Bearer ${token}` } })
 
-// Login user
-export const loginUser = (userData) => {
-  return axios.post(`${API_URL}/auth/login`, userData)
-};
+export const updateCustomer = (id, customerData, token) =>
+  axios.put(`${API_URL}/customers/${id}`, customerData, { headers: { Authorization: `Bearer ${token}` } })
 
-// Get all customers
-export const getCustomers = (token) => {
-  return axios.get(`${API_URL}/customers`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
-
-// Add a new customer
-export const addCustomer = (customerData, token) => {
-  return axios.post(`${API_URL}/customers`, customerData, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
-
-// Update customer 
-export const updateCustomer = (id, customerData, token) => {
-  return axios.put(`${API_URL}/customers/${id}`, customerData, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
-
-// Delete customer 
-export const deleteCustomer = (id, token) => {
-  return axios.delete(`${API_URL}/customers/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
+export const deleteCustomer = (id, token) =>
+  axios.delete(`${API_URL}/customers/${id}`, { headers: { Authorization: `Bearer ${token}` } })

@@ -3,7 +3,7 @@ import axios from "axios"
 
 
 // backend url
-const API_URL = "https://crm-mern-integration-4.onrender.com/api.js"
+const API_URL = "https://crm-mern-integration-4.onrender.com/api"
 
 // Register user
 export const registerUser = (userData) => {

@@ -12,37 +12,31 @@ connectDB();
 
 const app = express();
 
-// Simple CORS setup
-
-
-
-
-// Allow local dev and frontend deployed URL
-
-
+// Allowed origins
 const allowedOrigins = [
-  "http://localhost:5173",
-
-  // set this in Render env to your Vercel URL
-
-  process.env.FRONTEND_URL 
-
-
+  "http://localhost:5173", // Local development
+  process.env.FRONTEND_URL // Vercel frontend URL
 ].filter(Boolean);
 
+// CORS setup
 app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error("CORS not allowed"));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
-}))
+}));
 
 // Body parser
-app.use(express.json())
+app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes)
-app.use("/api/customers", customerRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/customers", customerRoutes);
 
 // Start server
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

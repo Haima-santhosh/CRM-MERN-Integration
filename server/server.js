@@ -15,20 +15,22 @@ const app = express();
 // Allowed origins
 const allowedOrigins = [
   "http://localhost:5173", // Local development
+
   process.env.FRONTEND_URL // Vercel frontend URL
+
 ].filter(Boolean);
+
 
 // CORS setup
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    callback(new Error("CORS not allowed"));
-  },
+
+  origin: allowedOrigins, // array of allowed origins
+
+
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
+
 
 // Body parser
 app.use(express.json());
